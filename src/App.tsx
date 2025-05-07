@@ -6,6 +6,7 @@ import {Route, Routes} from "react-router-dom";
 import Header from "./components/Header.tsx";
 import CharacterDetailCard from "./components/CharacterDetailCard.tsx";
 import CreateCharacter from "./components/CreateCharacter.tsx";
+import axios from "axios";
 
 export default function App() {
     const [searchText, setSearchText] = useState("");
@@ -13,6 +14,11 @@ export default function App() {
 
     const filteredCharacters = characterList
         .filter((character) => character.name.toLowerCase().includes(searchText.toLowerCase()));
+
+    function loadAllCharacters() {
+        axios.get("https://rickandmortyapi.com/api/character")
+            .then(response => setCharacterList(response.data.results));
+    }
 
     return (
         <>
@@ -22,6 +28,7 @@ export default function App() {
                 <Route path={"/characters"} element={
                     <>
                         <input type="text" onChange={(e) => setSearchText(e.target.value)} placeholder="Search for a character"/>
+                        <button onClick={loadAllCharacters}>Load Characters</button>
                         {
                             filteredCharacters.length > 0
                                 ? <CharacterGallery characters={filteredCharacters}/>
