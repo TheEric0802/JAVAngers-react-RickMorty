@@ -1,6 +1,6 @@
 import './App.css'
 import CharacterGallery from "./components/CharacterGallery.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {characters} from "./Characters.ts";
 import {Route, Routes} from "react-router-dom";
 import Header from "./components/Header.tsx";
@@ -20,6 +20,10 @@ export default function App() {
             .then(response => setCharacterList(response.data.results));
     }
 
+    useEffect(() => {
+        loadAllCharacters();
+    }, [])
+
     return (
         <>
             <Header/>
@@ -28,7 +32,7 @@ export default function App() {
                 <Route path={"/characters"} element={
                     <>
                         <input type="text" onChange={(e) => setSearchText(e.target.value)} placeholder="Search for a character"/>
-                        <button onClick={loadAllCharacters}>Load Characters</button>
+                        {/*<button onClick={loadAllCharacters}>Load Characters</button>*/}
                         {
                             filteredCharacters.length > 0
                                 ? <CharacterGallery characters={filteredCharacters}/>
