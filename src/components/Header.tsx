@@ -10,6 +10,7 @@ export default function Header() {
             <nav className={"navbar"}>
                 <button onClick={() => navigate("/")}>Home</button>
                 <button onClick={() => navigate("/characters")}>Characters</button>
+                <button onClick={() => navigate("/create")}>Create Character</button>
             </nav>
         </header>
     );
