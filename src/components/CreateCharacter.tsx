@@ -3,7 +3,11 @@ import {Character} from "../types/RickAndMortyCharacter.ts";
 import {characters} from "../Characters.ts";
 import {useNavigate} from "react-router-dom";
 
-export default function CreateCharacter() {
+type CreateCharacterProps = {
+    addCharacter: (character: Character) => void
+}
+
+export default function CreateCharacter(props: Readonly<CreateCharacterProps>) {
 
     const [name, setName] = useState<string>("");
     const [status, setStatus] = useState<string>("Alive");
@@ -14,13 +18,26 @@ export default function CreateCharacter() {
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         const char:Character = {
-            id: characters.length + 1,
+            id: characters.length + 1000,
             name: name,
             status: status,
-            species: species
+            species: species,
+            type: "",
+            gender: "",
+            origin: {
+                name: "",
+                url: ""
+            },
+            location: {
+                name: "",
+                url: ""
+            },
+            image: "",
+            episode: [],
+            url: "",
+            created: ""
         }
-        characters.push(char)
-        console.log(characters)
+        props.addCharacter(char)
         nav("/characters")
     }
 

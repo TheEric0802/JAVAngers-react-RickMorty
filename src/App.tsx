@@ -9,8 +9,9 @@ import CreateCharacter from "./components/CreateCharacter.tsx";
 
 export default function App() {
     const [searchText, setSearchText] = useState("");
+    const [characterList, setCharacterList] = useState(characters);
 
-    const filteredCharacters = characters
+    const filteredCharacters = characterList
         .filter((character) => character.name.toLowerCase().includes(searchText.toLowerCase()));
 
     return (
@@ -29,7 +30,7 @@ export default function App() {
                     </>
                 } />
                 <Route path={"characters/:id"} element={<CharacterDetailCard characters={characters}/>}/>
-                <Route path={"/create"} element={<CreateCharacter/>} />
+                <Route path={"/create"} element={<CreateCharacter addCharacter={char => setCharacterList([...characterList, char])}/>} />
             </Routes>
         </>
     );
